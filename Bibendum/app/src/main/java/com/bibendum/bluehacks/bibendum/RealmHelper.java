@@ -34,7 +34,6 @@ public class RealmHelper {
         return habitsInfos;
     }
 
-<<<<<<< HEAD
 
     public void deleteHabits(){
         RealmResults<Habit> habits = realm.where(Habit.class).findAll();
@@ -43,8 +42,7 @@ public class RealmHelper {
         realm.commitTransaction();
     }
 
-=======
->>>>>>> develop
+
     public void saveItems(final Item item) {
         realm.executeTransaction(new Realm.Transaction() {
             @Override
@@ -75,8 +73,6 @@ public class RealmHelper {
         results.deleteAllFromRealm();
         realm.commitTransaction();
     }
-
-<<<<<<< HEAD
     public void saveStronghold(final Stronghold stronghold) {
         realm.executeTransaction(new Realm.Transaction() {
             @Override
@@ -95,17 +91,11 @@ public class RealmHelper {
 
     public void removeStronghold() {
         RealmResults<Stronghold> results = realm.where(Stronghold.class).findAll();
-=======
-    public void deleteHabits(){
-        RealmResults<Habit> habits = realm.where(Habit.class).findAll();
->>>>>>> develop
-        realm.beginTransaction();
-        results.deleteAllFromRealm();
-        realm.commitTransaction();
     }
 
-<<<<<<< HEAD
-=======
+
+
+
     public int retrieveRescPts() {
         int pts;
         Stronghold stronghold = realm.where(Stronghold.class).findFirst();
@@ -114,5 +104,5 @@ public class RealmHelper {
 
         return pts;
     }
->>>>>>> develop
+
 }
