@@ -2,7 +2,10 @@ package com.bibendum.bluehacks.bibendum;
 
 import java.util.ArrayList;
 
+<<<<<<< HEAD
 import io.realm.RealmList;
+=======
+>>>>>>> develop
 import io.realm.RealmObject;
 
 public class Stronghold extends RealmObject {
