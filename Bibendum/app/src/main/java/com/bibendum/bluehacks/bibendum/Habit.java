@@ -11,7 +11,7 @@ public class Habit extends RealmObject {
 	private int frequency;
 	private int daysPassed;
 	private Date start;
-	private boolean currentStatus;
+	public boolean currentStatus;
 	private boolean finalStatus;
 	private String tag;
 

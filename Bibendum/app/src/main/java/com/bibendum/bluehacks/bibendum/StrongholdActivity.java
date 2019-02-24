@@ -23,27 +23,40 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.Realm;
+
 public class StrongholdActivity extends AppCompatActivity {
     private ArrayList<Item> items = new ArrayList<Item>();
     private RecyclerView itemsRView;
     private StrongholdAdapter mAdapter;
     public TextView itemDetails;
     public Dialog myDialog;
+    private Realm realm;
+    private RealmHelper helper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stronghold);
-        //items = (ArrayList<Item>) getIntent().getSerializableExtra("itemList");
         setTitle("Stronghold");
+
+        // get list of items
+        realm = Realm.getDefaultInstance();
+        //RETRIEVE
+        helper = new RealmHelper(realm);
+        helper.removeItem("name", "house");
+        helper.removeItem("name", "hammer");
+        helper.removeItem("name", "saw");
+        helper.removeItem("name", "barbwire");
+        prepareItemData();
+        items = helper.retrieveItems();
+
         itemsRView = (RecyclerView) findViewById(R.id.itemsRView);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         itemsRView.setLayoutManager(mLayoutManager);
         itemsRView.setItemAnimator(new DefaultItemAnimator());
         mAdapter = new StrongholdAdapter(items, StrongholdActivity.this);
         itemsRView.setAdapter(mAdapter);
-
-        // prepareItemData();
 
         // popup
         myDialog = new Dialog(this);
@@ -84,28 +97,28 @@ public class StrongholdActivity extends AppCompatActivity {
     }
 
     // dummy data for testing
-//    private void prepareItemData() {
-//        Item item1 = new Item("house");
-//        item1.setHabit("walking the dog");
-//        item1.setHabitDuration(30);
-//        items.add(item1);
-//
+    private void prepareItemData() {
+        Item item1 = new Item("house","walking the dog",30,50);
+        helper.saveItems(item1);
+
 //        Item item2 = new Item("hammer");
-//        item1.setHabit("drinking 10 glasses of water");
-//        item1.setHabitDuration(7);
-//        items.add(item2);
+//        item2.setHabit("drinking 10 glasses of water");
+//        item2.setHabitDuration(7);
+//        item2.setPoints(40);
+//        helper.saveItems(item2);
 //
 //        Item item3 = new Item("saw");
-//        items.add(item3);
-//        item1.setHabit("jogging for 30 minutes");
-//        item1.setHabitDuration(60);
+//        item3.setHabit("jogging for 30 minutes");
+//        item3.setHabitDuration(60);
+//        item3.setPoints(30);
+//        helper.saveItems(item3);
 //
 //        Item item4 = new Item("barbwire");
-//        items.add(item4);
-//        item1.setHabit("meditating every morning");
-//        item1.setHabitDuration(14);
-//
-//        mAdapter.notifyDataSetChanged();
-//    }
+//        item4.setHabit("meditating every morning");
+//        item4.setHabitDuration(14);
+//        item4.setPoints(20);
+//        helper.saveItems(item4);
+
+    }
 
 }

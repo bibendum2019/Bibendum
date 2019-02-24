@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@mipmap/scroll"
+    android:fillViewport="true">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            android:paddingTop="90dp">
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/button9"
+            style="@style/Widget.AppCompat.ActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="379dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="0dp"
+            android:background="@android:drawable/ic_menu_close_clear_cancel"
+            android:backgroundTint="@android:color/background_dark" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/editText3"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="59dp"
+            android:layout_marginTop="120dp"
+            android:layout_marginEnd="90dp"
+            android:layout_marginBottom="38dp"
+            android:gravity="center"
+            android:text="ADVENTURE REPORT"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="27sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/editText3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="130dp"
+            android:layout_marginTop="143dp"
+            android:layout_marginEnd="147dp"
+            android:ems="10"
+            android:gravity="center"
+            android:inputType="date"
+            android:text="Jan"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse"
+            tools:text="@tools:sample/date/mmddyy" />
+
+        <Button
+            android:id="@+id/button10"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView6"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="189dp"
+            android:layout_marginTop="9dp"
+            android:layout_marginEnd="134dp"
+            android:layout_marginBottom="137dp"
+            android:background="@color/colorPrimaryDark"
+            android:text="R E S C U E" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="232dp"
+            android:layout_height="39dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="111dp"
+            android:layout_marginTop="498dp"
+            android:layout_marginEnd="68dp"
+            android:gravity="center"
+            android:text="TextView" />
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="230dp"
+            android:layout_height="278dp"
+            android:layout_below="@+id/editText3"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="94dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginEnd="87dp"
+            android:layout_marginBottom="237dp" />
+
+    </RelativeLayout>
+
+</ScrollView>

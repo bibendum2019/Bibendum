@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Realm realm;
     private RecyclerView feedRView;
+    private boolean strongholdExists = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +44,10 @@ public class MainActivity extends AppCompatActivity {
         //RETRIEVE
         RealmHelper helper = new RealmHelper(realm);
 
+        if( !strongholdExists ) {
+            helper.saveStronghold(new Stronghold());
+            strongholdExists = true;
+        }
 
         Date date = new Date();
         //TextView tv = (TextView) findViewById(R.id.textView3);
@@ -53,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         feedRView.setLayoutManager(mLayoutManager);
         feedRView.setItemAnimator(new DefaultItemAnimator());
-        MainActivityAdapter mAdepter = new MainActivityAdapter(habits,MainActivity.this);
+        MainActivityAdapter mAdepter = new MainActivityAdapter(habits,helper.retrieveStronghold(),MainActivity.this);
         feedRView.setAdapter(mAdepter);
 
 //        Habit newHabit = new Habit("COOKING",2,3,date,"Physical");
