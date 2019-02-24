@@ -1,6 +1,7 @@
 package com.bibendum.bluehacks.bibendum;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Movie;
 import android.graphics.drawable.ColorDrawable;
@@ -11,6 +12,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -77,6 +81,23 @@ public class StrongholdActivity extends AppCompatActivity {
 
             }
         }));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.advsummary:
+                Intent as = new Intent(getApplicationContext(), AdventureSummaryActivity.class);
+                startActivity(as);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.stronghold_menu, menu);
+        return true;
     }
 
     // to show popup
