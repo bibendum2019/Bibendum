@@ -23,9 +23,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import io.realm.Realm;
+
 class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapter.MyViewHolder> {
 
     private List<Habit> habitsList;
+    private Stronghold s;
+    private int limit = 3;
     Context c;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -44,8 +48,9 @@ class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapter.MyVie
     }
 
 
-    public MainActivityAdapter(List<Habit> habitsList, Context c) {
+    public MainActivityAdapter(List<Habit> habitsList, Stronghold s,Context c) {
         this.habitsList = habitsList;
+        this.s = s;
         this.c = c;
     }
 
@@ -89,16 +94,24 @@ class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapter.MyVie
             holder.progressDay.setText("Progress: Day " + (h.getDaysPassed(curr)+1+"") + "/" + h.getDuration()+"");
             holder.pb.setMax(h.getDuration());
             holder.pb.setProgress((int) h.getDaysPassed(curr));
+            final Realm realm = Realm.getDefaultInstance();
+            if(h.canDoHabitToday()){
+                holder.accomplishBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        realm.beginTransaction();
+                        h.didHabitToday();
+                        s.addPtsForResc(1);
+                        realm.commitTransaction();
+                        System.out.println("YOU HAVE: " + s.getPtsForResc());
+                        Button button = (Button) view;
+                        button.setVisibility(View.GONE);
+                        Toast.makeText(c, "Time to add a new habit!", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }else holder.accomplishBtn.setAlpha(0);
 
 
-
-            holder.accomplishBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    h.didHabitToday();
-                    Toast.makeText(c, "Time to add a new habit!", Toast.LENGTH_LONG).show();
-                }
-            });
         }
 
 
@@ -107,7 +120,8 @@ class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapter.MyVie
 
     @Override
     public int getItemCount() {
-        return habitsList.size()+1;
+        if(habitsList.size() > limit) return limit;
+        else return habitsList.size()+1;
     }
 
 
