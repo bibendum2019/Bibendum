@@ -2,6 +2,8 @@ package com.bibendum.bluehacks.bibendum;
 
 import java.util.ArrayList;
 
+import io.realm.Realm;
+import io.realm.RealmList;
 import io.realm.RealmObject;
 
 public class Stronghold extends RealmObject {
@@ -15,7 +17,7 @@ public class Stronghold extends RealmObject {
     private int nSoc;
     private int nOccup;
     private int nIntell;
-    private ArrayList<Item> items = new ArrayList<Item>();
+    private RealmList<Item> items = new RealmList<Item>();
 
     public int getPtsForResc() {
         return ptsForResc;
@@ -125,11 +127,11 @@ public class Stronghold extends RealmObject {
         this.nIntell += moreIntell;
     }
 
-    public ArrayList<Item> getItems() {
+    public RealmList<Item> getItems() {
         return items;
     }
 
-    public void setItems(ArrayList<Item> items) {
+    public void setItems(RealmList<Item> items) {
         this.items = items;
     }
 }
