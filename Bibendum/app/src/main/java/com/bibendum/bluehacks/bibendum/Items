@@ -1,8 +1,0 @@
-class Items {
-    public static void main(String[] args) {
-        String itemName;
-        Date dateReceived;
-        ArrayList<String> itemList = new ArrayList<String>();
-        list.add();
-    }
-}

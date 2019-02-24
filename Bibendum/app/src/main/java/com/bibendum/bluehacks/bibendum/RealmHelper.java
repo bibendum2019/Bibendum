@@ -7,7 +7,6 @@ import io.realm.RealmResults;
 
 public class RealmHelper {
     Realm realm;
-    ArrayList<Habit> habitsInfo;
     public RealmHelper(Realm realm){
         this.realm = realm;
     }
@@ -23,15 +22,62 @@ public class RealmHelper {
         });
     }
 
-    public ArrayList<Habit> retrieve() {
-        ArrayList<Habit> habitDescriptions = new ArrayList<>();
+    public ArrayList<Habit> retrieveHabits() {
+        ArrayList<Habit> habitsInfos = new ArrayList<>();
         RealmResults<Habit> habits = realm.where(Habit.class).findAll();
 
         for (Habit h : habits) {
-            Habit hToAdd = new Habit(h.getName(), h.getDuration(), h.getFrequency(), h.getStartDate());
-            habitsInfo.add(hToAdd);
+            Habit toAdd = new Habit(h.getName(),h.getDuration(),h.getFrequency(),h.getStartDate(),h.getTag());
+            habitsInfos.add(h);
         }
 
-        return habitsInfo;
+        return habitsInfos;
+    }
+
+    public void saveItems(final Item item) {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+
+                Item i =realm.copyToRealm(item);
+
+            }
+        });
+    }
+
+    public ArrayList<Item> retrieveItems() {
+        ArrayList<Item> items = new ArrayList<>();
+        RealmResults<Item> itemsRealm = realm.where(Item.class).findAll();
+
+        for (Item i : itemsRealm) {
+            items.add(i);
+        }
+
+        return items;
+    }
+
+    public void removeItem(String field, String value) {
+
+        RealmResults<Item> results = realm.where(Item.class).equalTo(field, value).findAll();
+
+        realm.beginTransaction();
+        results.deleteAllFromRealm();
+        realm.commitTransaction();
+    }
+
+    public void deleteHabits(){
+        RealmResults<Habit> habits = realm.where(Habit.class).findAll();
+        realm.beginTransaction();
+        habits.deleteAllFromRealm();
+        realm.commitTransaction();
+    }
+
+    public int retrieveRescPts() {
+        int pts;
+        Stronghold stronghold = realm.where(Stronghold.class).findFirst();
+
+        pts = stronghold.getPtsForResc();
+
+        return pts;
     }
 }

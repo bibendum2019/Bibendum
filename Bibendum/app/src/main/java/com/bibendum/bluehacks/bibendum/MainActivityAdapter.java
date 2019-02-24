@@ -8,8 +8,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +20,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapter.MyViewHolder> {
@@ -26,20 +29,23 @@ class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapter.MyVie
     Context c;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView text, time, date, groupName ;
+        public TextView text, progressDay ;
+        public ProgressBar pb;
+        public Button accomplishBtn, newHabitBtn;
 
         public MyViewHolder(View view) {
             super(view);
-            text = (TextView) view.findViewById(R.id.text);
-            time = (TextView) view.findViewById(R.id.time);
-            //date = (TextView) view.findViewById(R.id.date);
-            //groupName = (TextView) view.findViewById(R.id.groupName);
+            text = (TextView) view.findViewById(R.id.habitName);
+            progressDay = (TextView) view.findViewById(R.id.progressDay);
+            pb = (ProgressBar) view.findViewById(R.id.progressBar);
+            accomplishBtn = (Button) view.findViewById(R.id.accomplishBtn);
+            newHabitBtn = (Button) view.findViewById(R.id.newHabitBtn);
         }
     }
 
 
-    public MainActivityAdapter(Context c) {
-        //this.announcementList = announcementList;
+    public MainActivityAdapter(List<Habit> habitsList, Context c) {
+        this.habitsList = habitsList;
         this.c = c;
     }
 
@@ -50,24 +56,58 @@ class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapter.MyVie
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(c)
-                .inflate(R.layout.main_recview_row_layout, parent, false);
+        View itemView;
+
+        if(viewType == R.layout.main_recview_row_layout){
+            itemView = LayoutInflater.from(c).inflate(R.layout.main_recview_row_layout, parent, false);
+        }
+
+        else {
+            itemView = LayoutInflater.from(c).inflate(R.layout.addhabit_recview_row_layout, parent, false);
+        }
+
 
         return new MyViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        final Habit h = habitsList.get(position);
-        holder.text.setText(h.getName());
-        //holder.date.setText(h.getDate());
-        holder.time.setText(h.getFrequency());
+        if(position == habitsList.size()) {
+            holder.newHabitBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent ag = new Intent(c, HabitActivity.class);
+                    c.startActivity(ag);
+                    Toast.makeText(c, "Time to add a new habit!", Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+        else {
+            Date curr = new Date();
+            final Habit h = habitsList.get(position);
+            holder.text.setText(h.getName());
+            holder.progressDay.setText("Progress: Day " + (h.getDaysPassed(curr)+1+"") + "/" + h.getDuration()+"");
+            holder.pb.setMax(h.getDuration());
+            holder.pb.setProgress((int) h.getDaysPassed(curr));
+
+
+
+            holder.accomplishBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    h.didHabitToday();
+                    Toast.makeText(c, "Time to add a new habit!", Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+
+
         //holder.groupName.setText(h.getGroupName());
     }
 
     @Override
     public int getItemCount() {
-        return habitsList.size();
+        return habitsList.size()+1;
     }
 
 

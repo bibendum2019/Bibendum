@@ -3,9 +3,21 @@ package com.bibendum.bluehacks.bibendum;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Item implements Serializable {
+import io.realm.RealmObject;
+
+public class Item extends RealmObject {
     private String name, habit;
     private Date dateReceived;
+    private int habitDuration, points;
+
+    public Item(){}
+
+    public Item(String n, String h, int hDur, int pts){
+        name = n;
+        habit = h;
+        habitDuration = hDur;
+        points = pts;
+    }
 
     public int getPoints() {
         return points;
@@ -14,8 +26,6 @@ public class Item implements Serializable {
     public void setPoints(int points) {
         this.points = points;
     }
-
-    private int habitDuration, points;
 
     public String getHabit() {
         return habit;

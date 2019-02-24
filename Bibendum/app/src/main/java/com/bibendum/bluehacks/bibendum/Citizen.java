@@ -1,7 +1,7 @@
 package com.bibendum.bluehacks.bibendum;
 
 public class Citizen {
-	private String[] classNames = {"Spirit", "EmoPsych", "Phys", "Soc", "Occup", "Intel"};
+	private String[] classNames = {"Spiritual", "Emotional/Psychological", "Physical", "Social", "Occupational", "Intellectual"};
 	private int classs;
 	private boolean living;
 

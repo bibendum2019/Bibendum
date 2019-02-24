@@ -1,11 +1,15 @@
 package com.bibendum.bluehacks.bibendum;
 
+import android.content.Intent;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.Date;
@@ -18,7 +22,8 @@ public class HabitActivity extends AppCompatActivity {
     EditText durationT, frequencyT;
     Button btnMinusD, btnAddD, btnMinusF, btnAddF, addHabitBtn;
     Realm realm;
-
+    Spinner spinner;
+    String tag;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +72,31 @@ public class HabitActivity extends AppCompatActivity {
                 if( curr < 7 ) frequencyT.setText((Integer.parseInt(frequencyT.getText().toString())+1)+"");
             }
         });
+
+
+        spinner = (Spinner) findViewById(R.id.tagBar);
+
+        String[] items = new String[] {"Spiritual", "Emotional/Psychological", "Physical", "Social", "Occupational", "Intellectual"};
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, items);
+
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+                tag = (String) parent.getItemAtPosition(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // TODO Auto-generated method stub
+            }
+        });
+
+
         addHabitBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Code here executes on main thread after user presses button
@@ -75,13 +105,19 @@ public class HabitActivity extends AppCompatActivity {
                 int frequency = Integer.parseInt(frequencyT.getText().toString());
                 Date d = new Date();
                 realm = Realm.getDefaultInstance();
-                Habit newHabit = new Habit(habit,duration,frequency,d);
+                Habit newHabit = new Habit(habit,duration,frequency,d,tag);
                 RealmHelper rh = new RealmHelper(realm);
                 rh.saveHabits(newHabit);
+                Intent ag = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(ag);
             }
         });
 
 
 
+
     }
+
+
+
 }
